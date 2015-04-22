@@ -20,6 +20,9 @@ File.new(ARGV[0]).each_line do |line|
   puts lowest_multiple_greatest_than(x, n)
 end
 
+# tests
+=begin
 p split_args('13,8') == [13, 8]
 p lowest_multiple_greatest_than(13, 8) == 16
 p lowest_multiple_greatest_than(17, 16) == 32
+=end

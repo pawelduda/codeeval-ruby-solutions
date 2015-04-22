@@ -11,5 +11,8 @@ def get_longest_word(sentence)
   sentence[longest_word_index]
 end
 
+# tests
+=begin
 p get_longest_word('some line with text') == 'some'
 p get_longest_word('another line') == 'another'
+=end

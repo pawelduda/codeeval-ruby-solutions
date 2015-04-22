@@ -1,5 +1,5 @@
 def split_args(str)
-	str.split(',').map(&:to_i)
+  str.split(',').map(&:to_i)
 end
 
 def bits_eql?(num, p1, p2)
@@ -12,6 +12,9 @@ File.new(ARGV[0]).each_line do |line|
   puts bits_eql?(num, p1, p2)
 end
 
+# tests
+=begin
 p split_args('86,2,3') == [86, 2, 3]
 p bits_eql?(86, 2, 3) == 'true'
 p bits_eql?(125, 1, 2) == 'false'
+=end

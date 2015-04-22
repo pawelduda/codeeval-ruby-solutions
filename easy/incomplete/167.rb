@@ -10,6 +10,8 @@ def trim_long_text(text)
   text
 end
 
+# tests
+=begin
 p trim_long_text('Tom exhibited.')
 p trim_long_text('Tom exhibited.') == 'Tom exhibited.'
 
@@ -27,3 +29,4 @@ p trim_long_text("Tom's mouth watered for the apple, but he stuck to his work.")
 
 p trim_long_text("123456789A123456789B123456789C123456789D123456789E123 5")
 p trim_long_text("123456789A123456789B123456789C123456789D123456789E123 5") == "123456789A123456789B123456789C123456789D123456789E123 5"
+=end
