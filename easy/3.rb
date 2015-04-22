@@ -1,3 +1,5 @@
+# https://www.codeeval.com/browse/3/
+
 require 'prime'
 
 def is_palindrome?(str)

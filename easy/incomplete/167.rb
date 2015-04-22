@@ -1,3 +1,5 @@
+# https://www.codeeval.com/browse/167/
+
 def trim_long_text(text)
   if text.size > 55
     text_ary = text[0..39].split(' ')

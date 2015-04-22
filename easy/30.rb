@@ -1,3 +1,5 @@
+# https://www.codeeval.com/browse/30/
+
 def split_lists(str)
   lists = []
   str.split(';').each do |list|

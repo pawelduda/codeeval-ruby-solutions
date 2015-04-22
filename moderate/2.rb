@@ -1,3 +1,5 @@
+# https://www.codeeval.com/browse/2/
+
 def get_required_lines_num(str)
   str.lines.first.to_i
 end

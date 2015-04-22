@@ -1,3 +1,5 @@
+# https://www.codeeval.com/browse/139/
+
 require 'date'
 
 def str_to_ary(str)

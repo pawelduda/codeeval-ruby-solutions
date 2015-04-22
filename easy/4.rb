@@ -1,3 +1,5 @@
+# https://www.codeeval.com/browse/4/
+
 require 'prime'
 
 sum = 0

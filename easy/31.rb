@@ -1,3 +1,5 @@
+# https://www.codeeval.com/browse/31/
+
 File.open(ARGV[0]).each_line do |line|
   line = line.split(',')
   result = line[0].index(line[1].strip)

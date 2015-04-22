@@ -1,3 +1,5 @@
+# https://www.codeeval.com/browse/18/
+
 def split_args(str)
   str.split(',').map(&:to_i) 
 end
