@@ -1,3 +1,4 @@
+# https://www.codeeval.com/browse/102/
 
 require 'json'
 
@@ -18,4 +19,3 @@ test_json = '{"menu": {"header": "menu", "items": [{"id": 27}, {"id": 0, "label"
 p JSON.parse(test_json)['menu']['items'][0]['id'] == 27
 p get_sum_of_ids_with_label(JSON.parse(test_json)) == 46
 =end
-

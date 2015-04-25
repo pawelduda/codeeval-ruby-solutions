@@ -1,3 +1,4 @@
+# https://www.codeeval.com/browse/99/
 
 def str_to_points_ary(str)
   str.split(') (').map do |point_str|
