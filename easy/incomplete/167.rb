@@ -12,6 +12,10 @@ def trim_long_text(text)
   text
 end
 
+File.open(ARGV[0]).each_line do |line|
+	puts trim_long_text(line.strip)
+end
+
 # tests
 =begin
 p trim_long_text('Tom exhibited.')
