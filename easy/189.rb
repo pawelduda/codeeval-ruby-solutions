@@ -5,9 +5,7 @@ def minimum_distance(numbers)
   min_distance = Float::INFINITY
 
   houses.each do |house|
-    total_distance = houses.inject(0) do |total_distance, other_house|
-      total_distance + (house - other_house).abs
-    end
+    total_distance = houses.inject(0) { |total_distance, other_house| total_distance + (house - other_house).abs }
     min_distance = total_distance if min_distance > total_distance
   end
 
