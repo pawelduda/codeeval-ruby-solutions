@@ -1,7 +1,6 @@
 # https://www.codeeval.com/browse/163/
 
 class BigAsciiNumber
-
   BIG_DIGITS = [
     "-**-\n*--*\n*--*\n*--*\n-**-\n----",
     "--*-\n-**-\n--*-\n--*-\n-***\n----",
