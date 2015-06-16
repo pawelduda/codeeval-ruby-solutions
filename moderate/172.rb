@@ -3,8 +3,7 @@
 def is_valid_card_number?(number)
   digits = credit_card_readable_to_processable(number)
   digits = multiple_every_second_from_right(digits)
-  sum = sum_special(digits)
-  sum % 10 == 0 ? 1 : 0
+  sum_special(digits) % 10 == 0 ? 1 : 0
 end
 
 def credit_card_readable_to_processable(number)
