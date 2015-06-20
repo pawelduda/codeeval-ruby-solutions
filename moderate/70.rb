@@ -1,35 +1,29 @@
 # https://www.codeeval.com/browse/70/
 
+Point = Struct.new(:x, :y)
+Rectangle = Struct.new(:top_left, :bot_right)
+
 def parse_input(input)
   input = input.split(',').map(&:to_i)
-  {
-    rect1: input[0..3],
-    rect2: input[4..7]
-  }
+  [
+    Rectangle.new(Point.new(input[0], input[1]), Point.new(input[2], input[3])),
+    Rectangle.new(Point.new(input[4], input[5]), Point.new(input[6], input[7]))
+  ]
 end
 
 def rectangles_overleap?(rect1, rect2)
-  #             -3          -1       1          3
-  x_coords = [rect1[0], rect1[2], rect2[0], rect2[2]]
-  y_coords = [rect1[1], rect1[3], rect2[1], rect2[3]]
-
-  if x_coords[0].between?(x_coords[2], x_coords[3]) || x_coords[1].between?(x_coords[2], x_coords[3])
-    return 'True'
-  end
-
-  if y_coords[0].between?(y_coords[2], y_coords[3]) || y_coords[1].between?(y_coords[2], y_coords[3])
-    return 'True'
-  end
-
-  'False'
+  return 'False' if rect1.top_left.x > rect2.bot_right.x || rect2.top_left.x > rect1.bot_right.x ||
+                    rect1.top_left.y < rect2.bot_right.y || rect2.top_left.y < rect1.bot_right.y 
+  'True'
 end
 
-# File.open(ARGV[0]).each_line do |line|
-#   input = parse_input(line)
-#   puts rectangles_overleap?(input[:rect1], input[:rect2])
-# end
+File.open(ARGV[0]).each_line do |line|
+  rects = parse_input(line)
+  puts rectangles_overleap?(rects[0], rects[1])
+end
 
 # tests 
-p parse_input('-3,3,-1,1,1,-1,3,-3')
-p rectangles_overleap?([-3, 3, -1, 1], [1, -1, 3, -3])
-p rectangles_overleap?([-3, 3, -1, 1], [-2, 4, 2, 2])
+# rects = parse_input('-3,3,-1,1,1,-1,3,-3')
+# p rectangles_overleap?(rects[0], rects[1]) == 'False'
+# rects = parse_input('-3,3,-1,1,-2,4,2,2')
+# p rectangles_overleap?(rects[0], rects[1]) == 'True'
