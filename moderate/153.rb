@@ -1,12 +1,16 @@
-# o o o
-# o i o
-# o i i
-# o i o
-
-# https://www.codeeval.com/open_challenges/153/
+# https://www.codeeval.com/browse/153/
+#
 # doors:
 # open - true
 # locked - false
+
+def parse_input(input)
+  input = input.split(' ').map(&:to_i)
+  {
+    doors_amount: input[0],
+    iterations_amount: input[1]
+  }
+end
 
 def open
   true
@@ -14,6 +18,10 @@ end
 
 def locked
   false
+end
+
+def create_open_doors(amount)
+  Array.new(amount, open)
 end
 
 def toggle_lock(doors, door_number)
@@ -40,26 +48,35 @@ end
 def iterate(doors)
   doors = toggle_every_nth_door(doors, 2)
   doors = toggle_every_nth_door(doors, 3)
-  toggle_last_lock(doors)
 end
 
 def process_doors(doors, iterations_amount)
-  iterations_amount.times { doors = iterate(doors) }
+  (iterations_amount - 1).times { doors = iterate(doors) }
+  doors = toggle_last_lock(doors)
   doors
 end
 
-# tests
-p open == true
-p locked == false
-p toggle_lock([open], 0) == [locked]
-p toggle_lock([locked], 0) == [open]
-p toggle_every_nth_door([open, open, open, open], 2) == [open, locked, open, locked]
-p toggle_every_nth_door([open, open, open, open], 3) == [open, open, locked, open]
-p toggle_last_lock([open, open, open, open]) == [open, open, open, locked]
-p iterate([open, open, open]) == [open, locked, open]
-p process_doors([open, open, open], 1) == [open, locked, open]
-p locked_doors_count([open, locked, locked, locked]) == 3
+File.open(ARGV[0]).each_line do |line|
+  input = parse_input(line)
+  doors = create_open_doors(input[:doors_amount])
+  doors = process_doors(doors, input[:iterations_amount])
+  puts locked_doors_count(doors)
+end
 
-p doors = Array.new(100, open)
-p process_doors(doors, 100)
-p locked_doors_count(doors) == 50
+# tests
+# p open == true
+# p locked == false
+# p toggle_lock([open], 0) == [locked]
+# p toggle_lock([locked], 0) == [open]
+# p toggle_every_nth_door([open, open, open, open], 2) == [open, locked, open, locked]
+# p toggle_every_nth_door([open, open, open, open], 3) == [open, open, locked, open]
+# p toggle_last_lock([open, open, open, open]) == [open, open, open, locked]
+# p iterate([open, open, open]) == [open, locked, locked]
+# p process_doors([open, open, open], 1) == [open, open, locked]
+# p locked_doors_count([open, locked, locked, locked]) == 3
+
+# doors = Array.new(100, open)
+# process_doors(doors, 100)
+# p locked_doors_count(doors) == 50
+
+
