@@ -75,23 +75,23 @@ File.open(ARGV[0]).each_line do |line|
 end
 
 # tests
-p open == true
-p locked == false
-p toggle_lock([open], 0) == [locked]
-p toggle_lock([locked], 0) == [open]
-p toggle_every_nth_door([open, open, open, open], 2) == [open, locked, open, locked]
-p toggle_every_nth_door([open, open, open, open], 3) == [open, open, locked, open]
-p toggle_last_lock([open, open, open, open]) == [open, open, open, locked]
-p iterate([open, open, open]) == [open, locked, locked]
-p process_doors([open, open, open], 1) == [open, open, locked]
-p unlocked_doors_count([open, locked, locked, locked]) == 1
+# p open == true
+# p locked == false
+# p toggle_lock([open], 0) == [locked]
+# p toggle_lock([locked], 0) == [open]
+# p toggle_every_nth_door([open, open, open, open], 2) == [open, locked, open, locked]
+# p toggle_every_nth_door([open, open, open, open], 3) == [open, open, locked, open]
+# p toggle_last_lock([open, open, open, open]) == [open, open, open, locked]
+# p iterate([open, open, open]) == [open, locked, locked]
+# p process_doors([open, open, open], 1) == [open, open, locked]
+# p unlocked_doors_count([open, locked, locked, locked]) == 1
 
-doors = create_open_doors(3)
-process_doors(doors, 1)
-p unlocked_doors_count(doors) == 2
+# doors = create_open_doors(3)
+# process_doors(doors, 1)
+# p unlocked_doors_count(doors) == 2
 
-doors = create_open_doors(100)
-process_doors(doors, 100)
-p unlocked_doors_count(doors) == 50
+# doors = create_open_doors(100)
+# process_doors(doors, 100)
+# p unlocked_doors_count(doors) == 50
 
 
