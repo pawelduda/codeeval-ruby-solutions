@@ -24,8 +24,20 @@ def create_open_doors(amount)
   Array.new(amount, open)
 end
 
+def lock(doors, door_number)
+  doors[door_number] = locked
+  doors
+end
+
 def toggle_lock(doors, door_number)
   doors[door_number] = !doors[door_number]
+  doors
+end
+
+def lock_every_nth_door(doors, n)
+  (0..doors.length - 1).select { |i| (i + 1) % n == 0 }.each do |i|
+    doors = lock(doors, i)
+  end
   doors
 end
 
@@ -33,7 +45,6 @@ def toggle_every_nth_door(doors, n)
   (0..doors.length - 1).select { |i| (i + 1) % n == 0 }.each do |i|
     doors = toggle_lock(doors, i)
   end
-
   doors
 end
 
@@ -41,12 +52,12 @@ def toggle_last_lock(doors)
   doors = toggle_lock(doors, doors.length - 1)
 end
 
-def locked_doors_count(doors)
-  doors.select { |door| door == locked }.count
+def unlocked_doors_count(doors)
+  doors.select { |door| door == open }.count
 end
 
 def iterate(doors)
-  doors = toggle_every_nth_door(doors, 2)
+  doors = lock_every_nth_door(doors, 2)
   doors = toggle_every_nth_door(doors, 3)
 end
 
@@ -60,23 +71,27 @@ File.open(ARGV[0]).each_line do |line|
   input = parse_input(line)
   doors = create_open_doors(input[:doors_amount])
   doors = process_doors(doors, input[:iterations_amount])
-  puts locked_doors_count(doors)
+  puts unlocked_doors_count(doors)
 end
 
 # tests
-# p open == true
-# p locked == false
-# p toggle_lock([open], 0) == [locked]
-# p toggle_lock([locked], 0) == [open]
-# p toggle_every_nth_door([open, open, open, open], 2) == [open, locked, open, locked]
-# p toggle_every_nth_door([open, open, open, open], 3) == [open, open, locked, open]
-# p toggle_last_lock([open, open, open, open]) == [open, open, open, locked]
-# p iterate([open, open, open]) == [open, locked, locked]
-# p process_doors([open, open, open], 1) == [open, open, locked]
-# p locked_doors_count([open, locked, locked, locked]) == 3
+p open == true
+p locked == false
+p toggle_lock([open], 0) == [locked]
+p toggle_lock([locked], 0) == [open]
+p toggle_every_nth_door([open, open, open, open], 2) == [open, locked, open, locked]
+p toggle_every_nth_door([open, open, open, open], 3) == [open, open, locked, open]
+p toggle_last_lock([open, open, open, open]) == [open, open, open, locked]
+p iterate([open, open, open]) == [open, locked, locked]
+p process_doors([open, open, open], 1) == [open, open, locked]
+p unlocked_doors_count([open, locked, locked, locked]) == 1
 
-# doors = Array.new(100, open)
-# process_doors(doors, 100)
-# p locked_doors_count(doors) == 50
+doors = create_open_doors(3)
+process_doors(doors, 1)
+p unlocked_doors_count(doors) == 2
+
+doors = create_open_doors(100)
+process_doors(doors, 100)
+p unlocked_doors_count(doors) == 50
 
 
