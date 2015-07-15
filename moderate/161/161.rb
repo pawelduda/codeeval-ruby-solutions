@@ -16,7 +16,7 @@ class GameOfLife
 
   def initialize(input)
     @previous_board = parse_input(input)
-    @board = @previous_board.dup
+    @board = parse_input(input)
   end
 
   def print_board
@@ -26,12 +26,18 @@ class GameOfLife
   end
 
   def iterate!
-    (0..@board[0].length - 1).each do |x|
-      (0..@board.length - 1).each do |y|
-        process_cell!(x, y)
-      end
-    end
+    process_cell!(0, 0)
+    process_cell!(0, 1)
+    process_cell!(0, 2)
+    process_cell!(1, 0)
+    process_cell!(1, 1)
+    process_cell!(1, 2)
+    process_cell!(2, 0)
+    process_cell!(2, 1)
+    process_cell!(2, 2)
 
+    # p @board
+    # p @previous_board
     self
   end
 
@@ -41,7 +47,7 @@ class GameOfLife
       y_vec = y + vec[1]
 
       if x_vec.between?(0, @previous_board[0].length - 1) && y_vec.between?(0, @previous_board.length - 1)
-        @previous_board[y_vec][x_vec]
+        @previous_board[x_vec][y_vec]
       else
         nil
       end
@@ -51,12 +57,13 @@ class GameOfLife
   private
 
   def live_neighbors_count(x, y)
+    # p neighbors(x, y)
     neighbors(x, y).count('*')
   end
 
   def process_cell!(x, y)
     count = live_neighbors_count(x, y)
-
+    # p count
     if count < 2 && @previous_board[x][y] == '*'
       @board[x][y] = '.'
     elsif count > 3 && @previous_board[x][y] == '*'
@@ -111,6 +118,7 @@ describe GameOfLife do
 # ***
 # **.
 # ...
+
 
   it 'should fetch neighbors of a cell' do
     expect(game_of_life.neighbors(0, 0)).to eq [nil, nil, nil, nil, '*', nil, '*', '*']
