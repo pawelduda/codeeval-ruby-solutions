@@ -1,0 +1,80 @@
+require 'rspec'
+require_relative '161'
+
+describe GameOfLife do
+  let(:game_of_life) { GameOfLife.new(test_input) }
+  let(:test_input) do
+    '***
+**.
+...'
+  end
+
+  it 'should parse the input' do
+    expect(game_of_life.print_board).to eq '***
+**.
+...'
+  end
+
+  it 'should assign cells to proper indices' do
+    expect(
+      [
+        game_of_life.board[0][0],
+        game_of_life.board[0][1],
+        game_of_life.board[0][2],
+        game_of_life.board[1][0],
+        game_of_life.board[1][1],
+        game_of_life.board[1][2],
+        game_of_life.board[2][0],
+        game_of_life.board[2][1],
+        game_of_life.board[2][2]
+      ]
+    ).to eq %w(* * * * * . . . .)
+  end
+
+  it 'should fetch neighbors of a cell' do
+    expect(game_of_life.neighbors(0, 0)).to eq [nil, nil, nil, nil, '*', nil, '*', '*']
+    expect(game_of_life.neighbors(2, 0)).to eq [nil, nil, nil, '*', nil, '*', '.', nil]
+    expect(game_of_life.neighbors(1, 1)).to eq ['*', '*', '*', '*', '.', '.', '.', '.']
+    expect(game_of_life.neighbors(2, 2)).to eq ['*', '.', nil, '.', nil, nil, nil, nil]
+  end
+
+  context 'cell' do 
+    it 'any live cell with fewer than two live neighbors dies, as if caused by under-population.' do
+      game_of_life = GameOfLife.new('...
+.*.
+..*').iterate!
+
+      expect(game_of_life.print_board).to eq '...
+...
+...'
+    end
+
+    it 'any live cell with two or three live neighbors lives on to the next generation' do
+      game_of_life = GameOfLife.new('**.
+**.
+...').iterate!
+
+      expect(game_of_life.print_board).to eq '**.
+**.
+...'
+    end
+
+    it 'any live cell with more than three live neighbors dies, as if by overcrowding' do
+      game_of_life = GameOfLife.new('***
+**.
+...').iterate!
+      expect(game_of_life.print_board).to eq '*.*
+*.*
+...'
+    end
+
+    it 'any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction' do
+      game_of_life = GameOfLife.new('**.
+*..
+...').iterate!
+      expect(game_of_life.print_board).to eq '**.
+**.
+...'
+    end
+  end
+end
