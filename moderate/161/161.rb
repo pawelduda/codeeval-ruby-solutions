@@ -25,19 +25,34 @@ class GameOfLife
     end.join("\n")
   end
 
-  def iterate!
-    process_cell!(0, 0)
-    process_cell!(0, 1)
-    process_cell!(0, 2)
-    process_cell!(1, 0)
-    process_cell!(1, 1)
-    process_cell!(1, 2)
-    process_cell!(2, 0)
-    process_cell!(2, 1)
-    process_cell!(2, 2)
+  def print_previous_board
+    @previous_board.map do |line|
+      line.join('')
+    end.join("\n")
+  end
 
+  def iterate!
+    puts print_previous_board
+    (0..@board.length - 1).each do |y|
+      (0..@board[0].length - 1).each do |x|
+        process_cell!(x, y)
+      end
+    end
+    # process_cell!(0, 0)
+    # process_cell!(0, 1)
+    # process_cell!(0, 2)
+    # process_cell!(1, 0)
+    # process_cell!(1, 1)
+    # process_cell!(1, 2)
+    # process_cell!(2, 0)
+    # process_cell!(2, 1)
+    # process_cell!(2, 2)
+    puts
+    puts print_board
     # p @board
     # p @previous_board
+    @previous_board = Marshal.load(Marshal.dump(@board))
+    gets.chomp
     self
   end
 
@@ -47,7 +62,7 @@ class GameOfLife
       y_vec = y + vec[1]
 
       if x_vec.between?(0, @previous_board[0].length - 1) && y_vec.between?(0, @previous_board.length - 1)
-        @previous_board[x_vec][y_vec]
+        @previous_board[y_vec][x_vec]
       else
         nil
       end
@@ -64,12 +79,12 @@ class GameOfLife
   def process_cell!(x, y)
     count = live_neighbors_count(x, y)
     # p count
-    if count < 2 && @previous_board[x][y] == '*'
-      @board[x][y] = '.'
-    elsif count > 3 && @previous_board[x][y] == '*'
-      @board[x][y] = '.'  
-    elsif count == 3 && @previous_board[x][y] == '.'
-      @board[x][y] = '*'
+    if count < 2 && @previous_board[y][x] == '*'
+      @board[y][x] = '.'
+    elsif count > 3 && @previous_board[y][x] == '*'
+      @board[y][x] = '.'  
+    elsif count == 3 && @previous_board[y][x] == '.'
+      @board[y][x] = '*'
     end
   end
 
@@ -85,6 +100,27 @@ class GameOfLife
 end
 
 ##### TESTS #####
+
+
+test_input_codeeval = '.........*
+.*.*...*..
+..........
+..*.*....*
+.*..*...*.
+.........*
+..........
+.....*..*.
+.*....*...
+.....**...'
+
+game_of_life_codeeval = GameOfLife.new(test_input_codeeval)
+10.times do |i|
+  system 'clear' or system 'cls'
+  puts "Iteration: #{i}" 
+  # puts game_of_life_codeeval.print_previous_board
+  game_of_life_codeeval.iterate!
+end
+
 
 test_input = '***
 **.
@@ -156,7 +192,18 @@ describe GameOfLife do
       expect(game_of_life.print_board).to eq '*.*
 *.*
 ...'
-    end    
+    end
+
+    it 'any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction' do
+      game_of_life = GameOfLife.new('**.
+*..
+...').iterate!
+      puts game_of_life.print_board
+      expect(game_of_life.print_board).to eq '**.
+**.
+...'
+    end
+
   end
 end
 
