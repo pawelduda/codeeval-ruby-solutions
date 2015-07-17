@@ -7,14 +7,12 @@ class GameOfLife
     [-1,  1], [0,  1], [1,  1]
   ]
 
-  attr_reader :board, :previous_board
-
   def initialize(input)
     @previous_board = parse_input(input)
     @board = parse_input(input)
   end
 
-  def print_board
+  def board
     @board.map do |line|
       line.join('')
     end.join("\n")
@@ -75,25 +73,8 @@ end
 
 ##### CODEEVAL INPUT #####
 
-input = ''
-File.open(ARGV[0]).each_line { |line| input << line }
-game_of_life = GameOfLife.new(input)
-10.times { game_of_life.iterate! }
-puts game_of_life.print_board
-
-##### TESTS #####
-
-# test_input_codeeval = '.........*
-# .*.*...*..
-# ..........
-# ..*.*....*
-# .*..*...*.
-# .........*
-# ..........
-# .....*..*.
-# .*....*...
-# .....**...'
-
-# game_of_life_codeeval = GameOfLife.new(test_input_codeeval)
-# 10.times { game_of_life_codeeval.iterate! }
-# puts game_of_life_codeeval.print_board
+# input = ''
+# File.open(ARGV[0]).each_line { |line| input << line }
+# game_of_life = GameOfLife.new(input)
+# 10.times { game_of_life.iterate! }
+# puts game_of_life.board

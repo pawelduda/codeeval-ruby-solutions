@@ -1,7 +1,7 @@
 # https://www.codeeval.com/browse/14/
 
 def string_permutations(stringish)
-  stringish.split('').permutation.map { |str| str.join }.sort.join(',')
+  stringish.split('').permutation.map(&:join).sort.join(',')
 end
 
 File.open(ARGV[0]).each_line do |line|
