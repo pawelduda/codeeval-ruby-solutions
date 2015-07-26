@@ -5,17 +5,17 @@ def parse_input(input)
 end
 
 def largest_sum(numbers)
-  max = 0
-  
   sums = []
-  (1..numbers.length).each do |i|
-    # sums << numbers.combination(i).reduce(:+)
-    sums << numbers.combination(2).to_a.map { |subarray| subarray.reduce(:+) }
+  (0..numbers.length).each do |index|
+    (1..numbers.length - index).each do |length|
+      sums << numbers[index, length].reduce(:+)
+    end
   end
-  # sums.max 
-  sums.flatten.max
+  sums.max
 end
 
+File.open(ARGV[0]).each_line { |line| puts largest_sum(parse_input(line)) }
+
 # tests
-p largest_sum(parse_input('-10,2,3,-2,0,5,-15')) #== 8
-p largest_sum(parse_input('2,3,-2,-1,10')) #== 12
+# p largest_sum(parse_input('-10,2,3,-2,0,5,-15')) == 8
+# p largest_sum(parse_input('2,3,-2,-1,10')) == 12
