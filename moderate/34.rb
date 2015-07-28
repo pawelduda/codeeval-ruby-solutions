@@ -10,8 +10,8 @@ end
 
 class Array
   def pairs_whose_sum_is_equal_to(number)
-    pairs = self.permutation(2).select { |pair| pair.reduce(:+) == number }
-    pairs.size > 0 ? pairs[0..pairs.size / 2 - 1].map { |pair| pair.join(',') }.join(';') : 'NULL'
+    pairs = self.combination(2).select { |pair| pair.reduce(:+) == number }
+    pairs.size > 0 ? pairs.map { |pair| pair.join(',') }.join(';') : 'NULL'
   end
 end
 
